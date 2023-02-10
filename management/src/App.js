@@ -1,6 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
 import Customer from './components/Customer';
+import Table from '@mui/material/Table'
+import TableHead from '@mui/material/TableHead'
+import TableBody from '@mui/material/TableBody'
+import TableRow from '@mui/material/TableRow'
+import TableCell from '@mui/material/TableCell'
+import { withStyles } from '@mui/material/styles';
+
+const styles = themes => ({
+  root :{
+    innerWidth : '100%'
+  },
+  table: {
+    minWidth: 1080
+  }
+})
 
 const customers = [
 {
@@ -32,7 +47,17 @@ const customers = [
 function App() {
   return (
     <div>
-      {
+      <Table>
+        <TableHead>
+          <TableCell>번호</TableCell>
+          <TableCell>이미지</TableCell>
+          <TableCell>이름</TableCell>
+          <TableCell>생년월일</TableCell>
+          <TableCell>성별</TableCell>
+          <TableCell>직업</TableCell>
+        </TableHead>
+        <TableBody>
+        {
         customers.map( c=> {
           return <Customer 
           key={c.id}
@@ -44,6 +69,11 @@ function App() {
           job={c.job}/>
         })
       }
+        </TableBody>
+
+      </Table>
+
+      
     </div>
   );
 }
