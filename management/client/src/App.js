@@ -1,12 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import Customer from './components/Customer';
+import { Paper } from '@mui/material';
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import { withStyles } from '@mui/material/styles';
+import { Component } from 'react';
 
 const styles = themes => ({
   root :{
@@ -17,37 +19,27 @@ const styles = themes => ({
   }
 })
 
-const customers = [
-{
-  'id': 1,
-  'image': 'https://placeimg.com/64/64/any',
-  'name':'티모시',
-  'birthday':'210104',
-  'gender':'남자',
-  'job':'회사원'
-},
-{
-  'id': 2,
-  'image': 'https://placeimg.com/64/64/any',
-  'name':'홍길동',
-  'birthday':'210104',
-  'gender':'남자',
-  'job':'회사원'
-},
-{
-  'id': 3,
-  'image': 'https://placeimg.com/64/64/any',
-  'name':'김티모',
-  'birthday':'210104',
-  'gender':'남자',
-  'job':'회사원'
-}
-]
+class App extends Component {
+  state = {
+    customers: ""
+  }
 
-function App() {
-  return (
-    <div>
-      <Table>
+componentDidMount(){
+     this.callApi()
+     .then(res => this.setState({customers:res}))
+     .catch(err => console.log(err));
+  }
+
+  callApi = async() => {
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body; 
+  }
+  render() {
+    const {classes} = this.props;
+    return (
+      <Paper>
+        <Table>
         <TableHead>
           <TableCell>번호</TableCell>
           <TableCell>이미지</TableCell>
@@ -57,25 +49,15 @@ function App() {
           <TableCell>직업</TableCell>
         </TableHead>
         <TableBody>
-        {
-        customers.map( c=> {
-          return <Customer 
-          key={c.id}
-          id={c.id}
-          image={c.image}
-          name={c.name}
-          birthday={c.birthday}
-          gender={c.gender}
-          job={c.job}/>
-        })
-      }
+        { this.state.customers ? this.state.customers.map( c=> {
+          return <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job}/>}) : ""
+        }
         </TableBody>
-
-      </Table>
-
-      
-    </div>
-  );
+        </Table>
+      </Paper>
+    )
+    };
 }
 
-export default App;
+// export default withStyles(styles)(App);
+export default App; 
