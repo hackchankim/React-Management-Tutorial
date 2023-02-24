@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Customer from './components/Customer';
+import CustomerAdd from './components/CustomerAdd';
 import { Paper } from '@mui/material';
 import Table from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
@@ -59,28 +60,31 @@ progress = () => {
 render() {
   const {classes} = this.props;
   return (
-    <Paper>
-      <Table>
-      <TableHead>
-        <TableCell>번호</TableCell>
-        <TableCell>이미지</TableCell>
-        <TableCell>이름</TableCell>
-        <TableCell>생년월일</TableCell>
-        <TableCell>성별</TableCell>
-        <TableCell>직업</TableCell>
-      </TableHead>
-      <TableBody>
-      { this.state.customers ? this.state.customers.map( c=> {
-        return <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job}/>}) : 
-        <TableRow>
-          <TableCell colSpan="6" align="center">
-            <CircularProgress varient="determinate" value={this.state.completed}/>
-          </TableCell>
-        </TableRow>
-      }
-      </TableBody>
-      </Table>
-    </Paper>
+    <div>
+      <Paper>
+        <Table>
+        <TableHead>
+          <TableCell>번호</TableCell>
+          <TableCell>이미지</TableCell>
+          <TableCell>이름</TableCell>
+          <TableCell>생년월일</TableCell>
+          <TableCell>성별</TableCell>
+          <TableCell>직업</TableCell>
+        </TableHead>
+        <TableBody>
+        { this.state.customers ? this.state.customers.map( c=> {
+          return <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job}/>}) : 
+          <TableRow>
+            <TableCell colSpan="6" align="center">
+              <CircularProgress varient="determinate" value={this.state.completed}/>
+            </TableCell>
+          </TableRow>
+        }
+        </TableBody>
+        </Table>
+      </Paper>
+      <CustomerAdd/>
+    </div>
   )
   };
 }
