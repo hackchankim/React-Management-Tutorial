@@ -1,5 +1,5 @@
 import React from 'react';
-import Axios from 'axios'; 
+import axios from 'axios'; 
 // import { post } from 'axios';
 
 class CustomerAdd extends React.Component {
@@ -20,7 +20,19 @@ class CustomerAdd extends React.Component {
         this.addCustomer()
             .then((response) => {
                 console.log(response.data);
+                this.props.stateRefresh();
         })
+
+        this.setState({
+            file : null,
+            name : '',
+            birthday : '',
+            gender : '',
+            job : '',
+            fileName : '' 
+        })
+
+        // window.location.reload(); // 화면 전체 리로드
     }
 
     handleFileChange = (e) => {
@@ -51,7 +63,7 @@ class CustomerAdd extends React.Component {
                 'content-type':'multipart/form-data'
             }
         }
-        return Axios.post(url,formData,config);
+        return axios.post(url,formData,config);
     }
 
     render() {
